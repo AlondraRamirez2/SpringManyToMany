@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.example.demo.model.Product;
+import com.example.demo.model.Producto;
 import com.example.demo.model.Image;
 import com.example.demo.repo.imagenRepo;
 import com.example.demo.repo.productoRepo;
 
 @RestController
-public class Imagen {
+public class ImagenController {
 
 @Autowired
 imagenRepo repo;
@@ -37,7 +37,7 @@ productoRepo repoProducto;
   }
   @PostMapping("imagen/{productId}")
   public Image addimagen(@RequestBody Image imagen,@PathVariable String productId) {
-    Optional<Product> p = repoProducto.findById(productId);
+    Optional<Producto> p = repoProducto.findById(productId);
     if(p.isPresent()){
       //System.out.println(p.get().getNombre());
       imagen.setProducto(p.get());
@@ -47,9 +47,9 @@ productoRepo repoProducto;
   }
   @GetMapping("imagen/{productId}")
   public Set<Image>  getImagensByProduct(@PathVariable String productId) {
-    Optional<Product> p = repoProducto.findById(productId);
+    Optional<Producto> p = repoProducto.findById(productId);
     if(p.isPresent()){
-      return  p.get().getimagenes();
+      return  p.get().getImagenes();
     }
     return null;
 

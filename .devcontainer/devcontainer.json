@@ -1,39 +1,37 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/java-postgres
 {
-	"name": "Spring Enviroment",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
-
+	"name": "Java & PostgreSQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
-			"installMaven": "true",
-			"installGradle": "false"
-		},
-		"ghcr.io/itsmechlark/features/postgresql:1": {
-            "version": "latest"
-        },
-        "ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {
-            "version": "13"
-        }
-	},
+		"ghcr.io/nlstn/devcontainer-features/psql:1": {}
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	// This can be used to network with other containers or with the host.
+	// "forwardPorts": [5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "java -version",
 
 	// Configure tool-specific properties.
-	"customizations": {
-  // Configure properties specific to VS Code.
-  "vscode": {
-    // Add the IDs of extensions you want installed when the container is created.
-    "extensions": [
-      "vmware.vscode-boot-dev-pack",
-      "vscjava.vscode-java-pack",
-      "cweijan.vscode-postgresql-client2"
-      ]
-    }
-  }
+	// "customizations": {},
+	,"customizations": {
+		"vscode": {
+			"extensions": [
+				"vmware.vscode-spring-boot",
+				"MermaidChart.vscode-mermaid-chart",
+				"vscjava.vscode-maven",
+				"cweijan.dbclient-jdbc"
+			]
+    	}
+	}
 
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }

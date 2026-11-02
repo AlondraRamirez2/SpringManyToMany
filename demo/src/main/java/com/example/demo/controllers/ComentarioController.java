@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Comment;
-import com.example.demo.model.Product;
+import com.example.demo.model.Producto;
 import com.example.demo.repo.comentarioRepo;
 import com.example.demo.repo.productoRepo;
 
 @RestController
-public class Comentario {
+public class ComentarioController {
 
 @Autowired
 comentarioRepo repo;
@@ -36,7 +36,7 @@ productoRepo repoProducto;
   }
   @PostMapping("comentario/{productId}")
   public Comment addcomentario(@RequestBody Comment comentario,@PathVariable String productId) {
-    Optional<Product> p = repoProducto.findById(productId);
+    Optional<Producto> p = repoProducto.findById(productId);
     if(p.isPresent()){
       System.out.println(p.get().getNombre());
       comentario.setProducto(p.get());
@@ -46,7 +46,7 @@ productoRepo repoProducto;
   }
   @GetMapping("comentarios/{productId}")
   public Set<Comment>  getCommentsByProduct(@PathVariable String productId) {
-    Optional<Product> p = repoProducto.findById(productId);
+    Optional<Producto> p = repoProducto.findById(productId);
     if(p.isPresent()){
       return  p.get().getComentarios();
     }

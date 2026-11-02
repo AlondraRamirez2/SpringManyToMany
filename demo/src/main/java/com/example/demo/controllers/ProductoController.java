@@ -2,7 +2,7 @@ package com.example.demo.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Product;
+import com.example.demo.model.Producto;
 import com.example.demo.repo.productoRepo;
 
 import java.util.List;
@@ -22,27 +22,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-public class Producto {
+public class ProductoController {
 @Autowired
 productoRepo repo;
 @GetMapping("productos")
-  public List<Product> findAllProductos() {
+  public List<Producto> findAllProductos() {
     return this.repo.findAll();
   }
 
 @PostMapping("producto")
-  public Product addProducto(@RequestBody Product producto) {
+  public Producto addProducto(@RequestBody Producto producto) {
     return repo.save(producto);
   }
 
 @GetMapping("producto/{id}")
-public Optional<Product> getById(@PathVariable String id) {
+public Optional<Producto> getById(@PathVariable String id) {
     return repo.findById(id);
 }
 
 
 @PutMapping("producto/{id}")
-public Product putProduct(@PathVariable String id, @RequestBody Product product) {
+public Producto putProduct(@PathVariable String id, @RequestBody Producto product) {
     product.setId(id);
     return repo.save(product);
 }

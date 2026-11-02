@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
@@ -27,6 +28,7 @@ import lombok.NoArgsConstructor;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Setter 
     private String id;
     private String url;
     private Short prioridad;
@@ -35,16 +37,7 @@ public class Image {
     
     @JsonBackReference
     @ManyToOne(fetch=FetchType.LAZY)
-    private Product producto;
-
-
-
-
-    public void setProducto(Product product) {
-        this.producto = product;
-    }
-    public void setId(String id){
-        this.id = id;
-    }
+    @Setter 
+    private Producto producto;
 
 }

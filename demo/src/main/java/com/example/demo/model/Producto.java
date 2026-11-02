@@ -20,6 +20,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,9 +31,10 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name="producto")
 @Entity
-public class Product {
+public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Setter 
     private String id;
 
     private String nombre;
@@ -47,16 +50,8 @@ public class Product {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "producto",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Setter 
     private Set<Image> imagenes;
     
-    public void setId(String id){
-        this.id =id;
-    }
-    public Set<Image> getimagenes(){
-        return this.imagenes;
-    }
-    
-
-
     
 }
