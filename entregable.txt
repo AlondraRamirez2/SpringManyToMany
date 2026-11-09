@@ -1,0 +1,24 @@
+¿Cómo afectará JPA a la base de datos?
+JPA detectará la relación muchos a muchos (@ManyToMany) y, en lugar de intentar meter múltiples valores en una sola columna (lo cual no es posible en bases de datos relacionales como PostgreSQL), creará automáticamente una tabla intermedia (tabla de unión o join table) para gestionar la relación entre las categorías y los productos.
+
+¿Qué tabla creará y qué columnas tendrá?
+Gracias a la anotación @JoinTable, creará una tabla llamada producto_deparments.
+Tendrá dos columnas principales (que actuarán como llaves foráneas):
+
+product_id: Hará referencia al ID de la tabla de productos.
+
+deparments_id: Hará referencia al ID de la tabla de categorías (que en tu modelo se llama Categorias).
+
+paso 2:
+¿Qué significa la anotación @JsonIgnore?
+Es una anotación de la librería Jackson que le indica a Spring Boot que ignore ese atributo (en este caso, el set de deparments) cuando convierta el objeto Java a formato JSON para enviarlo en las respuestas de la API.
+
+¿Por qué se utiliza en Producto?
+Sirve para evitar un error muy común llamado recursividad infinita (o StackOverflowError). Como la relación es bidireccional, si no pones @JsonIgnore, al pedir un Producto, este traería sus Categorías; cada Categoría traería sus Productos; esos Productos traerían sus Categorías, y así infinitamente. Al ponerlo del lado de Producto, rompes el ciclo: la Categoría muestra sus productos, pero el producto ya no vuelve a mostrar la categoría en el JSON.
+
+paso 3
+¿Cuál crees que es la función del endpoint addProductoCategoria/{productId}/{categoriaId}?
+Su función es crear el vínculo entre un producto que ya existe y una categoría que ya existe. Busca ambos registros por su ID y, si los dos existen, agrega el producto a la lista de la categoría y guarda el cambio. Esto es lo que finalmente inserta el registro en la tabla intermedia producto_deparments.
+
+¿Por qué se declaran dos repositorios (categoriaRepo y productoRepo)?
+Porque para poder vincularlos de forma segura, el controlador necesita ir a buscar los datos a dos tablas diferentes. Necesita productoRepo para consultar si el UUID del producto realmente existe en la tabla de productos, y categoriaRepo para hacer lo mismo con la categoría. Solo si ambos existen (isPresent()), procede a unirlos.

@@ -52,6 +52,11 @@ public class Producto {
     @OneToMany(mappedBy = "producto",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Setter 
     private Set<Image> imagenes;
+
+@ManyToMany(mappedBy = "productos", fetch = FetchType.EAGER)
+@JsonIgnore
+@Setter
+private Set<Department> deparments = new HashSet<>();
     
     
 }
